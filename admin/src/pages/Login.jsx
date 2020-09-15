@@ -3,7 +3,7 @@ import { showToast,showHttpError } from '../utils/library'
 import { Link } from 'react-router-dom';
 import Loader from '../components/Loader';
 import { SITENAMEALIAS,SITENAME } from '../utils/init';
-import {LoginUser} from '../utils/service'
+import {adminLogin} from '../utils/service'
 
 export default class Login extends React.Component {
     constructor(props) {
@@ -36,10 +36,10 @@ export default class Login extends React.Component {
                 user_password : this.passwordRef.current.value
             }
             this.setState({showLoader : true})
-             LoginUser(payload).then(function(res){
+            adminLogin(payload).then(function(res){
                 this.setState({showLoader : false})
                 var response = res.data;
-                if(response.errorResponse.errorStatusCode != 1000){
+                if(response.error.error_status != 0){
                     showToast('error',response.errorResponse.errorStatusType);
                 }else{
                     if(this.state.isRememberMe){
@@ -50,7 +50,7 @@ export default class Login extends React.Component {
                         localStorage.removeItem(SITENAMEALIAS + '_credentials')
                     }
         
-                    localStorage.setItem(SITENAMEALIAS + '_session',btoa(JSON.stringify(response.response)));
+                    localStorage.setItem(SITENAMEALIAS + '_session',btoa(JSON.stringify(response.user)));
         
                     this.props.history.push('/dashboard')
                }

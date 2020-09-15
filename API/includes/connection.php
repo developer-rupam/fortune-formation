@@ -1,14 +1,14 @@
 <?php 
 
-include_once('environment.php');
 header("Access-Control-Allow-Origin: *");
+include_once('environment.php');
 
 if($PRODUCTIONMODE == true){
     /** Production Server **/
     $servername = "localhost";
-    $username = "id11886609_developer";
-    $password = "Abcd@123";
-    $db_name = "id11886609_crypto_database";
+    $username = "id11886609_id11886609_developer";
+    $password = "IMJCB]/ODb}ir1!v";
+    $db_name = "id11886609_fortune_formation";
 }else{
   /** Development Server **/
     $servername = "localhost";

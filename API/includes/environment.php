@@ -1,5 +1,7 @@
 <?php
 
-$DEVELOPEMENTMODE = true;
-$PRODUCTIONMODE = false;
+
+$DEVELOPEMENTMODE = false;
+$PRODUCTIONMODE = true;
+
 ?>

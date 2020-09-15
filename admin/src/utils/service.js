@@ -3,15 +3,15 @@ import Swal from 'sweetalert2'
 const axios = require('axios');
 
 /*** Initializing headers ***/
-const headers = {headers: {'Content-Type': 'application/json',}}
+const headers = {headers: {'Content-Type': 'application/json','Access-Control-Allow-Origin':'*'}}
 
 
 
 /*** FUNCTION DEFINATION FOR LOGIN SERVICE ***/
-export const LoginUser = (obj) => {
+export const adminLogin = (obj) => {
     var payload = JSON.stringify(obj);
 
-    return axios.post(WEBSERVICE + '/user/login_user', payload,headers);
+    return axios.post(WEBSERVICE + '/adminLogin', payload,headers);
 
 }
 
