@@ -8,10 +8,10 @@ const headers = {headers: {'Content-Type': 'application/json','Access-Control-Al
 
 
 /*** FUNCTION DEFINATION FOR LOGIN SERVICE ***/
-export const adminLogin = (obj) => {
+export const AdminLogin = (obj) => {
     var payload = JSON.stringify(obj);
 
-    return axios.post(WEBSERVICE + '/adminLogin', payload,headers);
+    return axios.post(WEBSERVICE + '/AdminLogin', payload,headers);
 
 }
 

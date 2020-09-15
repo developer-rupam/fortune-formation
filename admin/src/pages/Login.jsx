@@ -3,7 +3,7 @@ import { showToast,showHttpError } from '../utils/library'
 import { Link } from 'react-router-dom';
 import Loader from '../components/Loader';
 import { SITENAMEALIAS,SITENAME } from '../utils/init';
-import {adminLogin} from '../utils/service'
+import {AdminLogin} from '../utils/service'
 
 export default class Login extends React.Component {
     constructor(props) {
@@ -32,15 +32,15 @@ export default class Login extends React.Component {
         e.preventDefault();
         if(this.usernameRef.current.value != '' && this.passwordRef.current.value != ''){
             let payload = {
-                user_email : this.usernameRef.current.value,
-                user_password : this.passwordRef.current.value
+                email : this.usernameRef.current.value,
+                password : this.passwordRef.current.value
             }
             this.setState({showLoader : true})
-            adminLogin(payload).then(function(res){
+            AdminLogin(payload).then(function(res){
                 this.setState({showLoader : false})
                 var response = res.data;
-                if(response.error.error_status != 0){
-                    showToast('error',response.errorResponse.errorStatusType);
+                if(response.error.error_data != 1000){
+                    showToast('error',response.error.error_msg);
                 }else{
                     if(this.state.isRememberMe){
                         localStorage.setItem(SITENAMEALIAS + '_remember_me','true')
@@ -50,7 +50,7 @@ export default class Login extends React.Component {
                         localStorage.removeItem(SITENAMEALIAS + '_credentials')
                     }
         
-                    localStorage.setItem(SITENAMEALIAS + '_session',btoa(JSON.stringify(response.user)));
+                    localStorage.setItem(SITENAMEALIAS + '_session',btoa(JSON.stringify(response.result[0])));
         
                     this.props.history.push('/dashboard')
                }
