@@ -120,7 +120,7 @@ export default class Login extends React.Component {
                                     <div className="col-md-6">
                                     <div className="loginFormRight">
                                         <div className="loginFormRight_box">
-                                            <img src={require("../assets/image/logo.png")} className="img-fluid"/>
+                                            {/* <img src={require("../assets/image/logo.png")} className="img-fluid"/> */}
                                             <h2>Welcome ! <br/> {SITENAME}</h2>
                                         </div>
                                     </div>

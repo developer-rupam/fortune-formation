@@ -7,7 +7,6 @@ import { SITENAMEALIAS } from '../utils/init';
 import { Link } from 'react-router-dom';
 import {setEmployeeList,setClientList } from "../utils/redux/action"
 import { connect } from 'react-redux';
-import { GetAllUser } from '../utils/service'
 import { showToast,showHttpError } from '../utils/library'
 
 
@@ -19,89 +18,19 @@ import { showToast,showHttpError } from '../utils/library'
             pageNo : 1,
             noOfItemsPerPage : 20,
             loggedInUserName : 'Guest',
-            recentFileList : [],
-            hasAccessToManageEmployees : false,
-			hasAccessToManageClients : false
         };
 
-        /**** BIND FUNCTIONS ****/
-        this.getAllEmployeesList = this.getAllEmployeesList.bind(this)
-        this.getAllClientsList = this.getAllClientsList.bind(this)
-        this.getLoggedInUserDetailsForPermission = this.getLoggedInUserDetailsForPermission.bind(this);
       
     }
 
 
-    /*** FUNCTION DEFINATION TO GET EMPLOYEE LIST ****/
-    getAllEmployeesList = () =>{
-        let payload ={
-            page_no : this.state.pageNo,
-            page_size : this.state.noOfItemsPerPage,
-        }
-        this.setState({showLoader : true})
-        GetAllUser(payload).then(function(res){
-            this.setState({showLoader : false})
-            var response = res.data;
-            if(response.errorResponse.errorStatusCode != 1000){
-                showToast('error',response.errorResponse.errorStatusType);
-            }else{
-                let employeesList = response.response;
-                this.props.setEmployeeList(employeesList);
-            }
-        }.bind(this)).catch(function(err){
-            this.setState({showLoader : false})
-            showHttpError(err)
-        }.bind(this))
-
-    }
-
-    /**** FUNCTION DEFINATION TO GET CLIENT LIST****/
-    getAllClientsList = () =>{
-        let payload ={
-            page_no : this.state.pageNo,
-            page_size : this.state.noOfItemsPerPage,
-        }
-        this.setState({showLoader : true})
-        GetAllUser(payload).then(function(res){
-            this.setState({showLoader : false})
-            var response = res.data;
-            if(response.errorResponse.errorStatusCode != 1000){
-                showToast('error',response.errorResponse.errorStatusType);
-            }else{
-                let allClientsList = response.response;
-                let clientsList = [];
-                for(let i=0;i<allClientsList.length;i++){
-                    if(allClientsList[i].user_role == 'CLIENT' && allClientsList[i].created_by == JSON.parse(atob(localStorage.getItem(SITENAMEALIAS + '_session'))).user_id){
-                        clientsList.push(allClientsList[i])
-                    }
-                }
-                this.props.setClientList(clientsList);
-               
-            }
-        }.bind(this)).catch(function(err){
-            this.setState({showLoader : false})
-            showHttpError(err)
-        }.bind(this))
-    }
+    
 
     /*** FUNCTION DEFINATION TO GET LOGGED IN USER DETAILS FOR PERMISSION ***/
     getLoggedInUserDetailsForPermission = () => {
         let session = JSON.parse(atob(localStorage.getItem(SITENAMEALIAS + '_session')))
         console.log(session)
-        if(session.user_role == 'ADMIN'){
-            var manageClients = true;
-            var manageEmployees = true;
-        }else if(session.user_role == 'CLIENT'){
-            var manageClients = false;
-            var manageEmployees = false;
-        }else{
-            var manageClients = session.manage_client;
-            var manageEmployees = session.manage_employee;
-        }
-        this.setState({
-            hasAccessToManageClients : manageClients,
-            hasAccessToManageEmployees : manageEmployees,
-        })
+        
     }
 
     render() {
@@ -142,23 +71,7 @@ import { showToast,showHttpError } from '../utils/library'
                                     <div className="card-body custom_card_body">
                                     <span>These are the items you recently accessed. This private list is only visable to you</span>
                                         <div className="recent_file_area">
-                                            <ul className="recent_file_item_list">
-                                                { this.state.recentFileList.map((list) =>
-                                                <li key={list.entity_id}>
-                                                    <div className="recent_file_item">
-                                                        <div className="recent_file_item_icon">
-                                                            <i className="fas fa-file-pdf"></i>
-                                                        </div>
-                                                        <div className="recent_file_item_filename">
-                                                            <p>{list.entity_name}</p>
-                                                            <ul className="recent_file_item_path">
-                                                                <li><a href="#!">Shared Folders</a></li>
-                                                                <li><a href="#!">Abc</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                )}
+                                            <ul >
                                             </ul>
                                         
                                         </div>
@@ -278,17 +191,11 @@ import { showToast,showHttpError } from '../utils/library'
         
         /*** Setting up dashboard pages with txt and functionalities manipulation ***/
         let loggedInUser = JSON.parse(atob(localStorage.getItem(SITENAMEALIAS + '_session')))
-        if(loggedInUser.user_name != undefined ){
-            this.setState({loggedInUserName : loggedInUser.user_name})
-            /** Calling FUNCTION TO GET LOGGED IN USER DETAILS ***/
-		    this.getLoggedInUserDetailsForPermission();
+        if(loggedInUser.name != undefined ){
+            this.setState({loggedInUserName : loggedInUser.name})
         }
 
-        /*** CALLING FUNCTION FOR GET ALL EMPLOYEES LIST***/
-        this.getAllEmployeesList()
-
-        /*** CALLING FUNCTION FOR GET ALL CLIENTS LIST***/
-        this.getAllClientsList()
+        
     }
     
 }

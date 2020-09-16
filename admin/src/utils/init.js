@@ -1,4 +1,4 @@
-const DEVELOPMENTOBJ = {url : 'http://localhost:3000',api : 'http://localhost:8080/Admin',baseurl : '/'};
+const DEVELOPMENTOBJ = {url : 'http://localhost:3000',api : 'https://fortune-formation.herokuapp.com/Admin',baseurl : '/'};
 const PRODUCTIONOBJ = {url : 'https://hostingfordevelopment.000webhostapp.com/smart-formation/dev ',api : 'https://devbetahost.000webhostapp.com/fortune_formation_api/admin',baseurl : 'https://hostingfordevelopment.000webhostapp.com/smart-formation/dev/'};
 
 export const mode = "dev" //dev : development; prod : production
