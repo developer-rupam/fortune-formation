@@ -7,6 +7,7 @@ import { showToast,showConfirm,showHttpError } from '../utils/library'
 import { Link,withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { SITENAMEALIAS } from '../utils/init';
+import {CreateService} from '../utils/service'
 
 
  class AddService extends React.Component {
@@ -27,7 +28,31 @@ import { SITENAMEALIAS } from '../utils/init';
 
    /*** Function defination for adding service api call ***/
    handleAddService = () =>{
+       if(
+           this.state.serviceName != '' && this.state.serviceName != undefined &&
+           this.state.serviceDescription != '' && this.state.serviceDescription != undefined
+       ){
+        let payload = {
+            serviceName : this.state.serviceName,
+            serviceDesc : this.state.serviceDescription,
+            createdBy : this.state.serviceCreatedBy 
+        }   
+        this.setState({showLoader : true})
+        CreateService(payload).then(function(res){
+            this.setState({showLoader : false})
+            var response = res.data;
+            if(response.error.error_data != 1000){
+                showToast('error',response.error.error_msg);
+            }else{
 
+            }
+        }.bind(this)).catch(function(err){
+            this.setState({showLoader : false})
+            showHttpError(err)
+        }.bind(this))
+       }else{
+           showToast('error','Please provide name and description');
+       }
    }
     
 
