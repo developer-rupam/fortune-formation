@@ -98,7 +98,7 @@ import Moment from 'react-moment';
                                                 </td>
                                                 <td>
                                                     <div className="ac_bot d-flex justify-content-center">
-                                                        <Link to={'/update-employee/'+list.employee_id} className="btn btn-light view_edit"><i className="fas fa-user-edit"></i></Link>
+                                                        <Link to={'/update-service/'+list._id} className="btn btn-light view_edit"><i className="fas fa-user-edit"></i></Link>
                                                         
                                                     </div>
                                                 </td>

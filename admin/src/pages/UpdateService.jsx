@@ -4,13 +4,13 @@ import Sidebar from '../components/Sidebar';
 import Footer from '../components/Footer';
 import Loader from '../components/Loader';
 import { showToast,showConfirm,showHttpError } from '../utils/library'
-import { Link,withRouter } from 'react-router-dom';
+import { Link,withRouter,browserHistory,matchPath, Redirect  } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { SITENAMEALIAS } from '../utils/init';
-import {CreateService} from '../utils/service'
+import {EditService} from '../utils/service'
 
 
- class AddService extends React.Component {
+ class UpdateService extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -18,33 +18,35 @@ import {CreateService} from '../utils/service'
             serviceName : '',
             serviceDescription : '',
             serviceStatus : '',
-            serviceCreatedBy : JSON.parse(atob(localStorage.getItem(SITENAMEALIAS + '_session')))._id
+            serviceId : '',
+            serviceCreatedBy : ''
         };
          /***  BINDING FUNCTIONS  ***/
-        this.handleAddService = this.handleAddService.bind(this)
+        this.handleUpdateService = this.handleUpdateService.bind(this)
     }
 
    
 
-   /*** Function defination for adding service api call ***/
-   handleAddService = () =>{
+   /*** Function defination for updating service api call ***/
+   handleUpdateService = () =>{
        if(
            this.state.serviceName != '' && this.state.serviceName != undefined &&
            this.state.serviceDescription != '' && this.state.serviceDescription != undefined
        ){
         let payload = {
+            serviceId : this.state.serviceId,
             serviceName : this.state.serviceName,
             serviceDesc : this.state.serviceDescription,
-            createdBy : this.state.serviceCreatedBy 
+            serviceActiveStatus : this.state.serviceStatus 
         }   
         this.setState({showLoader : true})
-        CreateService(payload).then(function(res){
+        EditService(payload).then(function(res){
             this.setState({showLoader : false})
             var response = res.data;
             if(response.error.error_data != 1000){
                 showToast('error',response.error.error_msg);
             }else{
-                showToast('success','Service added successfully');
+                showToast('success','Service updated successfully');
                 this.props.history.push('/services-list');
             }
         }.bind(this)).catch(function(err){
@@ -72,7 +74,7 @@ import {CreateService} from '../utils/service'
                                     <div className="card-header">
                                         <div className="d-flex justify-content-between align-items-center">
                                             <div className="lft-hdr">
-                                                <span><i className="fas fa-user-plus"></i></span>Add Service
+                                                <span><i className="fas fa-user-plus"></i></span>Update Service
                                             </div>
                                             <div className="rght-hdr ">
                                             <Link to="/services-list" className="addclient"><i className="fas fa-arrow-left"></i> Back</Link>
@@ -109,6 +111,17 @@ import {CreateService} from '../utils/service'
                                                                         <textarea name="" id="" cols="30" rows="10" className="form-control" placeholder="Description" defaultValue={this.state.serviceDescription} onBlur={(event) => {this.state.serviceDescription = event.target.value}}></textarea>
                                                                     </div>
                                                                 </div>
+                                                                <div className="form-row addClientRow" >
+                                                                        
+                                                                    <div className="form-group col-md-12">
+                                                                        
+                                                                        <div className="custom-control custom-checkbox">
+                                                                            <input type="checkbox" className="custom-control-input" id="customCheck1" checked={this.state.serviceStatus} onClick={()=>{this.setState({serviceStatus : !this.state.serviceStatus})}}/>
+                                                                            <label className="custom-control-label" htmlFor="customCheck1">Active Service</label>
+                                                                            </div>
+                                                                    </div>
+                                                                </div>
+                                                            
                                                             
                                                             </div>
                                                         </form>
@@ -121,7 +134,7 @@ import {CreateService} from '../utils/service'
                                        
                                        
                                         <div className="modal_button_area">
-                                        <button type="button" className="submit" onClick={this.handleAddService}>Add</button>
+                                        <button type="button" className="submit" onClick={this.handleUpdateService}>Update</button>
                                            
                                         </div>
                                     </div>
@@ -142,6 +155,32 @@ import {CreateService} from '../utils/service'
 
     componentDidMount(){
       
+      /*** retrieving service id from url and set in state ***/  
+      const match = matchPath(this.props.history.location.pathname, {
+        path: '/update-service/:param',
+        exact: true,
+        strict: false
+      })
+       this.state.serviceId = match.params.param
+
+       /*** retrieving service list from store ***/
+       let servicesList = this.props.globalState.serviceListReducer.list
+       console.log(servicesList)
+       if(servicesList!=undefined){
+            for(let i=0;i<servicesList.length;i++){
+                if(this.state.serviceId == servicesList[i]._id){
+                    this.setState({
+                        serviceName : servicesList[i].service_name,
+                        serviceDescription : servicesList[i].service_desc,
+                        createdBy : servicesList[i].service_created_by,
+                        serviceStatus : servicesList[i].active_status
+                    })
+                    break;
+                }
+            }
+       }else{
+         this.props.history.push('/services-list');
+       }
        
    }
 
@@ -155,5 +194,5 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps,null)(withRouter(AddService))
+export default connect(mapStateToProps,null)(withRouter(UpdateService))
 

@@ -17,6 +17,7 @@ import { withRouter } from 'react-router-dom';
         /**** BINDING FUNCTION ****/
         this.toggleNavigationDropdown = this.toggleNavigationDropdown.bind(this);
         this.getLoggedInUserDetailsForPermission = this.getLoggedInUserDetailsForPermission.bind(this);
+        this.findStringFromRoute = this.findStringFromRoute.bind(this);
     }
 
 
@@ -52,11 +53,21 @@ import { withRouter } from 'react-router-dom';
 			hasAccessToManageEmployees : manageEmployees,
 			hasPermissionToAccessPersonalSettings:session.access_user_settings,
 		})
-	}
+    }
+    
+    /*** function defination to find string from a route name ***/
+    findStringFromRoute(param){
+        let existStatus = false
+        if(this.props.location.pathname.indexOf(param) != -1){
+            existStatus = true
+        }else{
+            existStatus = false
+        }
+        return existStatus
+    }
 
 
     render() {
-		
         return (
             <Fragment>
                 <div className="sidebar">
@@ -67,7 +78,8 @@ import { withRouter } from 'react-router-dom';
                     <i className="fas fa-home mr-2" ></i>Dashboard </NavLink>
                   </li>
                   <li className="nav-item">
-                     <NavLink className="nav-link" activeClassName="active" to="/services-list" >
+                     <NavLink className={(this.findStringFromRoute('/services-list') || this.findStringFromRoute('/add-service') ||  this.findStringFromRoute('/update-service') ) ? 'nav-link active' : 'nav-link'
+                    } activeClassName="active" to="/services-list" >
                     <i className="fas fa-home mr-2" ></i>Services </NavLink>
                   </li>
                   
