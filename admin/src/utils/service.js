@@ -22,4 +22,10 @@ export const CreateService = (obj) => {
 
     return axios.post(WEBSERVICE + '/AddService', payload,headers);
 }
+/*** Function defination to get all service list ***/
+export const GetAllServicesList = (obj) => {
+    var payload = JSON.stringify(obj);
+
+    return axios.post(WEBSERVICE + '/ServicesList', payload,headers);
+}
 

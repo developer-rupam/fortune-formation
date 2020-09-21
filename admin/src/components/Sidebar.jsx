@@ -37,7 +37,6 @@ import { withRouter } from 'react-router-dom';
 	/*** FUNCTION DEFINATION TO GET LOGGED IN USER DETAILS FOR PERMISSION ***/
 	getLoggedInUserDetailsForPermission = () => {
 		let session = JSON.parse(atob(localStorage.getItem(SITENAMEALIAS + '_session')))
-		console.log(session)
 		if(session.user_role == 'ADMIN'){
 			var manageClients = true;
 			var manageEmployees = true;
@@ -68,7 +67,7 @@ import { withRouter } from 'react-router-dom';
                     <i className="fas fa-home mr-2" ></i>Dashboard </NavLink>
                   </li>
                   <li className="nav-item">
-                     <NavLink className="nav-link" activeClassName="active" to="/add-service" >
+                     <NavLink className="nav-link" activeClassName="active" to="/services-list" >
                     <i className="fas fa-home mr-2" ></i>Services </NavLink>
                   </li>
                   

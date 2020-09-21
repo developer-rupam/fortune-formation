@@ -5,7 +5,7 @@ import Footer from '../components/Footer';
 import Loader from '../components/Loader';
 import { SITENAMEALIAS } from '../utils/init';
 import { Link } from 'react-router-dom';
-import {setEmployeeList,setClientList } from "../utils/redux/action"
+//import {setEmployeeList,setClientList } from "../utils/redux/action"
 import { connect } from 'react-redux';
 import { showToast,showHttpError } from '../utils/library'
 
@@ -208,8 +208,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        setEmployeeList : (array) => dispatch(setEmployeeList(array)),
-        setClientList : (array) => dispatch(setClientList(array)),
+        //setEmployeeList : (array) => dispatch(setEmployeeList(array)),
+        //setClientList : (array) => dispatch(setClientList(array)),
     }
 }
 

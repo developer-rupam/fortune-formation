@@ -1,4 +1,4 @@
-import { ERROR, SUCCESS,SEARCH,EMPLOYEES,CLIENTS } from './constants'
+import {ERROR,SUCCESS,SEARCH,SERVICES} from './constants'
 
 /*** REDUCER DEFINATION FOR SEARCH IN HEADER SECTION ***/
 export const searchReducer = (state = {}, action) => {
@@ -12,23 +12,12 @@ export const searchReducer = (state = {}, action) => {
 }
 
 /*** REDUCER DEFINATION FOR EMPLOYEE LIST ***/
-export const employeeListReducer = (state = {}, action) => {
-
+export const serviceListReducer = (state = [], action) => {
     switch (action.type) {
-        case EMPLOYEES:
-            return  { ...state, employeesList : action.employees } ;
+        case SERVICES:
+            return  { ...state, list : action.service } ;
         default:
             return state;
     }
 }
 
-/*** REDUCER DEFINATION FOR CLIENT LIST ***/
-export const clientListReducer = (state = {}, action) => {
-
-    switch (action.type) {
-        case CLIENTS:
-            return { ...state, clientsList : action.clients } ;
-        default:
-            return state;
-    }
-}

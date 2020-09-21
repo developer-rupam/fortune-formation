@@ -1,4 +1,4 @@
-import {ERROR,SUCCESS,SEARCH,EMPLOYEES,CLIENTS} from './constants'
+import {SEARCH,SERVICES} from './constants'
 
 /*** ACTION DEFINATION FOR SET SEARCH QUERY ***/
 export const setSearch = (text) => {
@@ -10,21 +10,14 @@ export const setSearch = (text) => {
 }
 
 /*** ACTION DEFINATION FOR EMPLOYEES LIST ***/
-export const setEmployeeList = (array) => {
+export const setServicesList = (array) => {
     const action = {
-        type : EMPLOYEES,
-        employees : array
+        type : SERVICES,
+        service : array
     }
     return action
 }
 
-/*** ACTION DEFINATION FOR CLIENTS LIST ***/
-export const setClientList = (array) => {
-    const action = {
-        type : CLIENTS,
-        clients : array
-    }
-    return action
-}
+
 
 

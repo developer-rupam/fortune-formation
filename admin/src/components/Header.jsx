@@ -59,7 +59,7 @@ import { connect } from 'react-redux';
                     <span className="navbar-toggler-icon"></span>
                     </button>
                     <Link className="navbar-brand" to="/dashboard">
-                    <img className="navbar-brand-full img-fluid" src={require('../assets/image/logo.png')} alt="Logo"/>
+                   {/*  <img className="navbar-brand-full img-fluid" src={require('../assets/image/logo.png')} alt="Logo"/> */}
                     {/* <img className="navbar-brand-minimized" src={require('../assets/image/sm_logo.png')} alt="Logo" /> */}
                     </Link>
                     <button className="navbar-toggler sidebar-toggler d-md-down-none" type="button" onClick={this.toggleSidebar} data-toggle="sidebar-lg-show">

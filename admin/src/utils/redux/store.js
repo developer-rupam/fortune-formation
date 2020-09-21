@@ -1,12 +1,11 @@
 import { createStore, combineReducers } from 'redux'
-import { searchReducer,employeeListReducer,clientListReducer } from './reducer'
+import { searchReducer,serviceListReducer } from './reducer'
 
 
 
 const rootReducer = combineReducers({ 
     searchReducer: searchReducer,
-    employeeListReducer : employeeListReducer,
-    clientListReducer : clientListReducer,
+    serviceListReducer : serviceListReducer,
 })
 
 // export const store = createStore(searchReducer)
