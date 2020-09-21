@@ -1,7 +1,7 @@
 const DEVELOPMENTOBJ = {url : 'http://localhost:3000',api : 'https://fortune-formation.herokuapp.com/Admin',baseurl : '/'};
-const PRODUCTIONOBJ = {url : 'https://hostingfordevelopment.000webhostapp.com/smart-formation/dev ',api : 'https://devbetahost.000webhostapp.com/fortune_formation_api/admin',baseurl : 'https://hostingfordevelopment.000webhostapp.com/smart-formation/dev/'};
+const PRODUCTIONOBJ = {url : 'https://hostingfordevelopment.000webhostapp.com/fortune-formation/admin',api : 'https://fortune-formation.herokuapp.com/Admin',baseurl : 'https://hostingfordevelopment.000webhostapp.com/fortune-formation/admin/'};
 
-export const mode = "dev" //dev : development; prod : production
+export const mode = "prod" //dev : development; prod : production
 
 if(mode == 'dev'){
     var url = DEVELOPMENTOBJ.url;
