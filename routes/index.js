@@ -1,7 +1,9 @@
 const router = require('express').Router()
-//const userController = require('../controllers/user.controller')
+const adminUserController = require('../api/admin/users/users.controller')
+const adminServiceController = require('../api/admin/services/services.controller')
 
-//router.use('/user/',userController);
+router.use('/admin/users/',adminUserController);
+router.use('/admin/services/',adminServiceController);
 
 
 
