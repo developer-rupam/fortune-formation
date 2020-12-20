@@ -3,6 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import '../assets/js/bootstrap.min.js'
+import '../assets/js/float-panel.js'
+import '../assets/js/owl.carousel.min.js'
+import '../assets/js/script-menu.js'
+import '../assets/js/script.js'
+
 
 ReactDOM.render(
   <React.StrictMode>
