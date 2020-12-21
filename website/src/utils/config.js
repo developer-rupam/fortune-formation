@@ -19,3 +19,4 @@ export const BASEURL = baseurl;
 
 export const SITENAME = 'Fortune Formation';
 export const SITENAMEALIAS = 'fortune_formation';
+export const COMPANYHOUSEAPPKEY = 'McueXUMYhKynsnntxO9pSOGAXTwSNAuQ5NvotUrq';

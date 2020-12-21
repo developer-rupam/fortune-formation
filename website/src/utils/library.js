@@ -1,31 +1,33 @@
 import { SITENAMEALIAS } from './config'
 import Swal from 'sweetalert2'
+import { FetchCompanyListByQuery } from './service';
+
 
 
 /*** function defination for storing current route ***/
-export const storeCurrentRoute = (route) =>{
-    localStorage.setItem(SITENAMEALIAS + '_current_page',route);
+export const storeCurrentRoute = (route) => {
+  localStorage.setItem(SITENAMEALIAS + '_current_page', route);
 }
 
 /*** function defination for confirm message  ***/
-export const showConfirm = (title,text,type,callback) => {
-    Swal.fire({
-        title: title,
-        text: text,
-        icon: type,
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes'
-      }).then((result) => {
-        if (result.value) {
-            callback();
-        }
-      })
+export const showConfirm = (title, text, type, callback) => {
+  Swal.fire({
+    title: title,
+    text: text,
+    icon: type,
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes'
+  }).then((result) => {
+    if (result.value) {
+      callback();
+    }
+  })
 }
 
 /*** function defination for showing toast ***/
-export const showToast = (type,message) => {
+export const showToast = (type, message) => {
   const Toast = Swal.mixin({
     toast: true,
     position: 'bottom-end',
@@ -37,7 +39,7 @@ export const showToast = (type,message) => {
       //toast.addEventListener('mouseleave', Swal.resumeTimer)
     }
   })
-  
+
   Toast.fire({
     icon: type,
     title: message
@@ -46,20 +48,44 @@ export const showToast = (type,message) => {
 
 /***  funtion defination for showing http error ***/
 export const showHttpError = (error) => {
-  if(error.response != undefined){
+  if (error.response != undefined) {
     var code = error.response.code;
-    if(code == '401'){
-      showToast('error','Authentication Failed')
-    }else if(code == '404' || code == '403' || code == '400'){
-      showToast('error','Failed to connect with the server');
-    }else if(code == '500'){
-      showToast('error','Internal Server Error');
-    }else{
-      showToast('error','Technical Error');
+    if (code == '401') {
+      showToast('error', 'Authentication Failed')
+    } else if (code == '404' || code == '403' || code == '400') {
+      showToast('error', 'Failed to connect with the server');
+    } else if (code == '500') {
+      showToast('error', 'Internal Server Error');
+    } else {
+      showToast('error', 'Technical Error');
     }
-  }else{
-    showToast('error',error)
+  } else {
+    showToast('error', error)
   }
+}
+
+/**** Method defination to get compines name by query ****/
+export const handleCompanySearchDetails = (query) => {
+  FetchCompanyListByQuery(query).then(function (res) {
+    var response = res.data;
+    if (response.errorResponse.errorStatusCode != 1000) {
+      showToast('error', response.errorResponse.errorStatusType);
+    } else {
+      if(response.items){
+        let list = response.items
+        if(list.length > 0){
+         return false;
+        }else{
+          return true;
+        }
+      }else{
+        return false;
+      }
+
+    }
+  }.bind(this)).catch(function (err) {
+    showHttpError(err)
+  }.bind(this))
 }
 
 
