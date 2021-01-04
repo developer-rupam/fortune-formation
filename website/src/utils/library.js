@@ -1,6 +1,5 @@
 import { SITENAMEALIAS } from './config'
 import Swal from 'sweetalert2'
-import { FetchCompanyListByQuery } from './service';
 
 
 
@@ -64,28 +63,6 @@ export const showHttpError = (error) => {
   }
 }
 
-/**** Method defination to get compines name by query ****/
-export const handleCompanySearchDetails = (query) => {
-  FetchCompanyListByQuery(query).then(function (res) {
-    var response = res.data;
-    if (response.errorResponse.errorStatusCode != 1000) {
-      showToast('error', response.errorResponse.errorStatusType);
-    } else {
-      if(response.items){
-        let list = response.items
-        if(list.length > 0){
-         return false;
-        }else{
-          return true;
-        }
-      }else{
-        return false;
-      }
 
-    }
-  }.bind(this)).catch(function (err) {
-    showHttpError(err)
-  }.bind(this))
-}
 
 

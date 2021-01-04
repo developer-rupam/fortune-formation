@@ -1,3 +1,4 @@
+/* eslint-disable */
 !(function(n, i, e, a) {
   (n.navigation = function(t, s) {
     var o = {

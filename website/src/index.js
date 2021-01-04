@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-
+import jQuery from 'jquery' // Import directly from node-modules
+import './assets/js/script-menu'
+window.jQuery = jQuery
 
 
 

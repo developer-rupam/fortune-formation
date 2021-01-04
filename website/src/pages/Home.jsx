@@ -9,7 +9,11 @@ import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 import { SITENAMEALIAS } from '../utils/config';
-import { showToast, showConfirm, showHttpError, handleCompanySearchDetails} from '../utils/library'
+import { showToast, showConfirm, showHttpError } from '../utils/library'
+import { FetchCompanyListByQuery } from '../utils/service';
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from 'react-responsive-carousel';
+
 
 
 class Home extends React.Component {
@@ -17,21 +21,43 @@ class Home extends React.Component {
         super(props);
         this.state = {
             showLoader: false,
+            companyExistingStatus: '',
+            isCompanyExist: false,
         };
 
         /*** Initializing reference in input fileds ****/
         this.searchCompanyNameRef = React.createRef();
-
+        
 
     }
 
+    
+
     /*** Method defination for handling search query using Company House API  ****/
-    handleSearchForCompanyName = (e) =>{
+    handleSearchForCompanyName = (e) => {
         e.preventDefault();
-        console.log(this.searchCompanyNameRef)
         let query = this.searchCompanyNameRef.current.value;
-        let companyRes = handleCompanySearchDetails(query);
-        console.log(companyRes)
+        if (query !== '') {
+
+            FetchCompanyListByQuery(query).then(function (res) {
+                var response = res.data;
+                if (response.items) {
+                    let companysList = response.items
+                    this.setState({ companyExistingStatus: 'Company name is available', isCompanyExist: false })
+                    companysList.forEach((company) => {
+                        if (query.toLowerCase() === company.title.toLowerCase()) {
+                            console.log('if')
+                            this.setState({ companyExistingStatus: 'Company name already exist,please try with another name', isCompanyExist: true })
+                        }
+                    })
+                } else {
+
+                }
+
+            }.bind(this)).catch(function (err) {
+                showHttpError(err)
+            }.bind(this))
+        }
     }
 
 
@@ -45,7 +71,7 @@ class Home extends React.Component {
         return (
             <Fragment>
                 <Header />
-                <div id="myCarousel" className="carousel slide" style={{marginBottom:'350px'}}>
+                {/*  <div id="myCarousel" className="carousel slide" style={{marginBottom:'350px'}}>
 
                     <div className="carousel-inner">
                         <div className="item">
@@ -69,7 +95,18 @@ class Home extends React.Component {
                         <span className="icon-next"></span>
                     </a>
 
-                </div>
+                </div> */}
+                <Carousel showThumbs={false}>
+                    <div>
+                        <img className="fill" src={banner2} />
+                    </div>
+                    <div>
+                        <img className="fill" src="http://www.marchettidesign.net/demo/optimized-bootstrap/campus.jpg" />
+                    </div>
+                    <div>
+                        <img className="fill" src="http://www.marchettidesign.net/demo/optimized-bootstrap/conference.jpg" />
+                    </div>
+                </Carousel>
                 <section id="search" className="slideanim slide">
                     <div className="container">
                         <div className="col-md-8 col-sm-12 col-md-offset-2">
@@ -77,10 +114,13 @@ class Home extends React.Component {
                                 <h1> Ready to form your Limited Company? </h1>
                                 <p>Enter the proposed Company Name to check availability</p>
 
-                                <form className="example" onSubmit={(e)=>{this.handleSearchForCompanyName(e)}}>
-                                    <input type="text" placeholder="Search.." name="search" ref={this.searchCompanyNameRef}/>
+                                <form className="example" onSubmit={(e) => { this.handleSearchForCompanyName(e) }}>
+                                    <input type="text" placeholder="Search.." name="search" ref={this.searchCompanyNameRef} />
                                     <button type="submit"><i className="fa fa-search"></i></button>
                                 </form>
+                                {this.state.companyExistingStatus === '' && <p>{this.state.companyExistingStatus}</p>}
+                                {!this.state.isCompanyExist && <p style={{ color: 'green' }}>{this.state.companyExistingStatus}</p>}
+                                {this.state.isCompanyExist && <p style={{ color: 'red' }}>{this.state.companyExistingStatus}</p>}
 
                             </div>
 
@@ -440,7 +480,7 @@ class Home extends React.Component {
                             autoplay={true}
                             stagePadding={20}
                             autoplayTimeout={2000}
-                            navigation={false}
+                            nav={false}
                             dots={false}>
                             <div className="item"><img src={require("../assets/images/s1.png")} /></div>
                             <div className="item"><img src={require("../assets/images/s2.png")} /></div>
@@ -472,7 +512,7 @@ class Home extends React.Component {
                                         loop
                                         items={1}
                                         autoplay={false}
-                                        navigation={false}
+                                        nav={false}
                                         dots={false}
                                         mouseDrag={true}
                                         touchDrag={true}
@@ -483,14 +523,14 @@ class Home extends React.Component {
                                                 dots: false
                                             }
                                         }}
-                                            >
+                                    >
 
                                         <div className="feedback-slider-item">
                                             <img src={require("../assets/images/client1.jpg")} className="center-block img-circle" alt="" />
                                             <h3 className="customer-name">Lisa Redfern</h3>
                                             <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. It is a long established fact that a reader will be distracted by the readable its layout.</p>
                                             <span className="light-bg customer-rating" data-rating="5">
-                                                    5
+                                                5
             <i className="fa fa-star"></i>
                                             </span>
                                         </div>
@@ -500,7 +540,7 @@ class Home extends React.Component {
                                             <h3 className="customer-name">Cassi</h3>
                                             <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. It is a long established fact that a reader will be distracted by the readable its layout.</p>
                                             <span className="light-bg customer-rating" data-rating="4">
-                                                    4
+                                                4
             <i className="fa fa-star"></i>
                                             </span>
                                         </div>
@@ -510,7 +550,7 @@ class Home extends React.Component {
                                             <h3 className="customer-name">Md Nahidul</h3>
                                             <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. It is a long established fact that a reader will be distracted by the readable its layout.</p>
                                             <span className="light-bg customer-rating" data-rating="5">
-                                                    5
+                                                5
             <i className="fa fa-star"></i>
                                             </span>
                                         </div>

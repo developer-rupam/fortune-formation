@@ -10,8 +10,7 @@ const companyHouseAuthHeaders = {headers:{'Authorization' : COMPANYHOUSEAPPKEY,'
 
 /*** FUNCTION DEFINATION FOR LOGIN SERVICE ***/
 export const FetchCompanyListByQuery = (query) => {
-    console.log(companyHouseAuthHeaders)
-    return axios.get('https://api.company-information.service.gov.uk/search/companies?q=' + query,companyHouseAuthHeaders);
+    return axios.get('https://api.company-information.service.gov.uk/search/companies?items_per_page=1000&q=' + query,companyHouseAuthHeaders);
 
 }
 

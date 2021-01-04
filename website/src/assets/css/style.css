@@ -939,7 +939,7 @@ header.float-panel {
 }
 
 .megamenu-list {
-    width: 100%;
+   /*  width: 100%; */
     margin: 0 0 15px;
     padding: 0;
     display: inline-block;

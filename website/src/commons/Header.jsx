@@ -7,11 +7,30 @@ import { withRouter } from 'react-router-dom';
 class Header extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            showServiceSubmenu : false,
+            showOfficeServiceSubmenu : false,
+        }
 
     }
 
 
+    /*** Method defination for ttoggling sub menu ****/
+    toggleSubMenu = (param) =>{
+        if(param === 'services'){
+            this.setState({
+                showServiceSubmenu : true,
+                showOfficeServiceSubmenu : false,
+
+            })
+        }else if(param === 'officeservices'){
+            this.setState({
+                showServiceSubmenu : false,
+                showOfficeServiceSubmenu : true,
+
+            })
+        }
+    }
 
 
 
@@ -37,8 +56,11 @@ class Header extends React.Component {
                                 <div className="nav-menus-wrapper">
                                     <ul className="nav-menu align-to-right">
                                         <li><a href="index.html">Home</a></li>
-                                        <li><a href="">Services</a>
-                                            <div className="megamenu-panel">
+                                        <li onMouseOver={(e)=>{this.toggleSubMenu('services')}} onMouseLeave={(e) => this.setState({
+                                             showServiceSubmenu : false,
+                                             showOfficeServiceSubmenu : false,
+                                        })}><a href="">Services</a>
+                                            {this.state.showServiceSubmenu && <div className="megamenu-panel nav-submenu" style={{display:'block',right:'0px'}}>
                                                 <div className="megamenu-lists">
                                                     <ul className="megamenu-list list-col-3">
                                                         <li className="megamenu-list-title"><a href="">Company Formations </a></li>
@@ -73,18 +95,21 @@ class Header extends React.Component {
 
                                                     </ul>
                                                 </div>
-                                            </div>
+                                            </div>}
                                         </li>
-                                        <li><a href="">Office services</a>
+                                        <li onMouseOver={(e)=>{this.toggleSubMenu('officeservices')}} onMouseLeave={(e) => this.setState({
+                                             showServiceSubmenu : false,
+                                             showOfficeServiceSubmenu : false,
+                                        })}><a href="">Office services</a>
 
-                                            <ul className="nav-dropdown">
+                                        {this.state.showOfficeServiceSubmenu && <ul className="nav-dropdown nav-submenu" style={{display:'block',right:'auto'}}>
                                                 <li><a href="#">Registered Office Services</a></li>
                                                 <li><a href="">Business Mail - Scanned</a></li>
                                                 <li><a href="">Business Mail - Forwarded</a></li>
                                                 <li><a href="">Official Mail - Forwarded</a></li>
                                                 <li><a href="">UK Post Box Service</a></li>
                                                 <li><a href="">Telephone Services</a></li>
-                                            </ul>
+                                            </ul>}
 
                                         </li>
                                         <li><a href="price.html">Price List</a></li>
