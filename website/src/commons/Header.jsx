@@ -65,9 +65,9 @@ class Header extends React.Component {
                                                     <ul className="megamenu-list list-col-3">
                                                         <li className="megamenu-list-title"><a href="">Company Formations </a></li>
                                                         <li><Link to="/starter">Starter Pack</Link></li>
-                                                        <li><a href="business.html">Business Pack</a></li>
-                                                        <li><a href="corporate.html">Corporate Pack</a></li>
-                                                        <li><a href="international.html">International Pack</a></li>
+                                                        <li><Link to="/business">Business Pack</Link></li>
+                                                        <li><Link to="/corporate">Corporate Pack</Link></li>
+                                                        <li><Link to="/international">International Pack</Link></li>
 
                                                     </ul>
                                                     <ul className="megamenu-list list-col-3">
