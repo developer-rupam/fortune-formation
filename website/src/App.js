@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import Home from './pages/Home'
+import Starter from './pages/Starter'
 
 import {BrowserRouter as Router, Switch,Route,withRouter,NavLink,browserHistory} from 'react-router-dom';
 
@@ -10,6 +11,7 @@ function App() {
      <Router basename={process.env.PUBLIC_URL}>
         <Switch>
           <Route path="/home" component={Home} />
+          <Route path="/starter" component={Starter} />
           <Route path="/" component={Home} exact/>
         </Switch>
       </Router>

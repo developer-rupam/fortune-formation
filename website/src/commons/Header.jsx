@@ -43,7 +43,7 @@ class Header extends React.Component {
                         <div className="container">
                             <nav id="navigation1" className="navigation">
                                 <div className="nav-header">
-                                    <a className="nav-brand" href="index.html"><img src={require('../assets/images/logo.png')} /></a>
+                                    <Link className="nav-brand" to="/home"><img src={require('../assets/images/logo.png')} /></Link>
                                     <div className="nav-toggle"></div>
                                 </div>
                                 <div className="nav-list">
@@ -55,7 +55,7 @@ class Header extends React.Component {
                                 </div>
                                 <div className="nav-menus-wrapper">
                                     <ul className="nav-menu align-to-right">
-                                        <li><a href="index.html">Home</a></li>
+                                        <li><Link to="/home">Home</Link></li>
                                         <li onMouseOver={(e)=>{this.toggleSubMenu('services')}} onMouseLeave={(e) => this.setState({
                                              showServiceSubmenu : false,
                                              showOfficeServiceSubmenu : false,
@@ -64,7 +64,7 @@ class Header extends React.Component {
                                                 <div className="megamenu-lists">
                                                     <ul className="megamenu-list list-col-3">
                                                         <li className="megamenu-list-title"><a href="">Company Formations </a></li>
-                                                        <li><a href="starter.html">Starter Pack</a></li>
+                                                        <li><Link to="/starter">Starter Pack</Link></li>
                                                         <li><a href="business.html">Business Pack</a></li>
                                                         <li><a href="corporate.html">Corporate Pack</a></li>
                                                         <li><a href="international.html">International Pack</a></li>
